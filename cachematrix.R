@@ -1,15 +1,38 @@
-## Put comments here that give an overall description of what your
-## functions do
+##  Coursera Programming assignment 2
+##  Goal: Create a cache system that utilizes R's lexical scoping properties to reduce the time of inversing the values of a matrix. 
 
-## Write a short comment describing this function
+
+## This function takes a matrix as an input, creates a special type of matrix object, and caches the inverse. 
 
 makeCacheMatrix <- function(x = matrix()) {
-
+    inv = NULL
+    set = function(y)    {
+        x <<- y
+        inv <<- NULL
+    }
+    
+    get = function() x 
+    setinverse <- function(inverse) inv <<- inverse
+    getinverse <- function() inv
+        list(set = set, get = get, setinverse = setinverse, getinverse = getinverse)
 }
 
 
-## Write a short comment describing this function
+## *cacheSolve* returns the inverse of the special matrix made in makeCacheMatrix. If an inverse matrix has been cached, 
+## the function will return a message that it is returning the cached result. 
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+    inv <- x$getinverse()
+    
+    if (!is.null(inv)) {
+        message("Returning the cached result")
+            return(inv)
+    }
+    
+    matrixvalues <- x$get()
+        inv <- solve(matrixvalues, ...) 
+        x$setinverse(inv)
+        
+        inv
+        
 }
